@@ -33,8 +33,20 @@ public class BoardController {
             return ResponseEntity.badRequest().body(response);
         }
 
-        Board board = Board.createBoard(request, user);
-        boardService.save(board);
+        Board board = boardService.save(request, user);
+
+        response.put("result", "성공");
+        response.put("board", board);
+
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/{boardId}")
+    public ResponseEntity<?> readBoardById(@PathVariable Long boardId) throws Exception{
+
+        HashMap<String, Object> response = new HashMap<>();
+
+        Board board = boardService.readBoardById(boardId);
 
         response.put("result", "성공");
         response.put("board", board);
@@ -57,7 +69,12 @@ public class BoardController {
             return ResponseEntity.badRequest().body(response);
         }
 
-        return null;
+        Board board = boardService.modifyBoard(boardId, request, user);
+
+        response.put("result", "성공");
+        response.put("modifyBoard", board);
+
+        return ResponseEntity.ok().body(response);
     }
 
     @DeleteMapping("/{boardId}")

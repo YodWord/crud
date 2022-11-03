@@ -17,6 +17,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User save(UserDTO.UserSignUpRequest request) throws Exception {
+        if(isDuplicate(request.getUser_id())) throw new Exception("이미 존재하는 아이디");
         User user = User.createUser(request);
         return userRepository.save(user);
     }
@@ -31,5 +32,10 @@ public class UserServiceImpl implements UserService{
     public User infoChange(UserDTO.UserInfoChangeRequest request, User user) throws Exception {
         User userChange = User.updateUser(request, user);
         return userRepository.save(userChange);
+    }
+
+    @Override
+    public Boolean isDuplicate(String user_id) throws Exception {
+        return userRepository.findByUserId(user_id).isPresent();
     }
 }

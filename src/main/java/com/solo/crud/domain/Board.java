@@ -21,7 +21,6 @@ public class Board {
     //@JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnore
     private User user;
 
     @Column(length = 254, nullable = false)
@@ -35,6 +34,15 @@ public class Board {
     public static Board createBoard(BoardDTO.createBoardRequest request, User user){
         Board board = new Board();
 
+        board.user = user;
+        board.boardTitle = request.getBoard_title();
+        board.boardContents = request.getBoard_contents();
+        board.boardCreateDate = Timestamp.valueOf(LocalDateTime.now());
+
+        return board;
+    }
+
+    public static Board modifyBoard(Board board, BoardDTO.modifyBoardRequest request, User user){
         board.user = user;
         board.boardTitle = request.getBoard_title();
         board.boardContents = request.getBoard_contents();

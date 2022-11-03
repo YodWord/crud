@@ -11,4 +11,5 @@ public interface UserService {
 
     public User infoChange(UserDTO.UserInfoChangeRequest request, User user) throws Exception;
 
+    public Boolean isDuplicate(String user_id) throws Exception;
 }

@@ -18,15 +18,34 @@ public class BoardServiceImpl implements BoardService{
     private final BoardRepository boardRepository;
 
     @Override
-    public Board save(Board board) throws Exception {
+    public Board save(BoardDTO.createBoardRequest request, User user) throws Exception {
+        Board board = Board.createBoard(request, user);
+
         return boardRepository.save(board);
+    }
+
+    @Override
+    public Board readBoardById(Long boardId) throws Exception {
+
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+
+        if(optionalBoard.isEmpty()) throw new Exception("개시글이 존재하지 않습니다.");
+
+        return optionalBoard.get();
     }
 
     @Override
     public Board modifyBoard(Long boardId, BoardDTO.modifyBoardRequest request, User user) throws Exception {
 
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
 
-        return null;
+        if(optionalBoard.isEmpty()) throw new Exception("개시글이 존재하지 않습니다.");
+
+        Board board = optionalBoard.get();
+
+        if(!board.getUser().getUserId().equals(user.getUserId())) throw new Exception("본인의 글이 아닙니다.");
+
+        return boardRepository.save(Board.modifyBoard(board, request, user));
     }
 
     @Override
