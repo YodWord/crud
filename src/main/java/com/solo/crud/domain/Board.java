@@ -17,9 +17,9 @@ public class Board {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardNo;
 
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "user_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    // fetch = EAGER -> 상상하지 못한 쿼리가...
+    // 근데 현재 상태는 EAGER 즉시로딩...
+    @ManyToOne//(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
