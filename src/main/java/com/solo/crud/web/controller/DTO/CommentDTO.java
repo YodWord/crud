@@ -42,4 +42,34 @@ public class CommentDTO {
             return cmr;
         }
     }
+
+    @Data
+    public static class modifyCommentRequest{
+
+        @NotBlank
+        private String comment_contents;
+
+    }
+
+    @Data
+    public static class modifyCommentResponse{
+
+        private Long comment_id;
+        private User user;
+        private Board board;
+        private String comment_contents;
+        private Timestamp comment_create_date;
+
+        public static modifyCommentResponse response(Comment comment){
+            modifyCommentResponse cmr = new modifyCommentResponse();
+
+            cmr.comment_id = comment.getCommentNo();
+            cmr.user = comment.getUser();
+            cmr.board = comment.getBoard();
+            cmr.comment_contents = comment.getCommentContents();
+            cmr.comment_create_date = comment.getCommentCreateDate();
+
+            return cmr;
+        }
+    }
 }

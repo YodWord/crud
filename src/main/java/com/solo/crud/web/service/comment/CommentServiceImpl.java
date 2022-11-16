@@ -33,4 +33,18 @@ public class CommentServiceImpl implements CommentService{
 
         return CommentDTO.commentCreateResponse.response(comment);
     }
+
+    @Override
+    public CommentDTO.modifyCommentResponse modifyComment(Long comment_id, CommentDTO.modifyCommentRequest request, User user) throws Exception {
+        Optional<Comment> optionalComment = commentRepository.findById(comment_id);
+
+        if(optionalComment.isEmpty()) throw new Exception("댓글이 존재하지 않습니다.");
+        Comment comment = optionalComment.get();
+
+        if(!comment.getUser().getUserId().equals(user.getUserId())) throw new Exception("본인의 댓글이 아닙니다.");
+        /*Comment commentModify = */
+        commentRepository.save(Comment.modifyComment(comment, request));
+
+        return CommentDTO.modifyCommentResponse.response(comment);
+    }
 }

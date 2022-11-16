@@ -8,4 +8,6 @@ public interface CommentService {
 
     public CommentDTO.commentCreateResponse save (CommentDTO.commentCreateRequest request, User user) throws Exception;
 
+    public CommentDTO.modifyCommentResponse modifyComment(Long comment_id, CommentDTO.modifyCommentRequest request, User user) throws Exception;
+
 }

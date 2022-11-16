@@ -39,5 +39,12 @@ public class Comment {
         return comment;
     }
 
+    public static Comment modifyComment(Comment comment, CommentDTO.modifyCommentRequest request){
+        comment.commentContents = request.getComment_contents();
+        comment.commentCreateDate = Timestamp.valueOf(LocalDateTime.now());
+
+        return comment;
+    }
+
 
 }
